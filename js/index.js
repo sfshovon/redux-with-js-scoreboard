@@ -2,14 +2,12 @@
 const addMatchButton = document.querySelector('.addMatch');
 const resetButton = document.querySelector('.resetMatch');
 const allMatches = document.querySelector('.allMatches');
-
 //Action Identifiers
 const ADD = 'ADD';
 const REMOVE = 'REMOVE';
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
 const RESET = 'RESET';
-
 // Action Creators
 const addMatch = () => {
   store.dispatch({ 
@@ -50,14 +48,12 @@ const resetScores = () => {
 //   };
 // }
 
-
 //Initial State
 const initialState = [{ 
     matchName: 'Match 1', 
     score: 0 
   }
 ]
-
 // Create Reducer Function //Full Function
 const matchReducer = (state = initialState , action) => { 
   switch (action.type) {
@@ -69,10 +65,8 @@ const matchReducer = (state = initialState , action) => {
               score: 0 
             }
           ];
-
     case 'REMOVE':
       return state.filter((match, value) => value !== action.payload);
-
     case 'INCREMENT':
       return state.map((match, value) => {
         if (value === action.payload) {
@@ -84,7 +78,6 @@ const matchReducer = (state = initialState , action) => {
             return { ...match };
         }
       });
-      
     case 'DECREMENT':
       return state.map((match, value) => {
         if (value === action.payload) {
@@ -119,38 +112,38 @@ const render = () => {
   // Add matches
   state.forEach((match, value) => {
     const newMatch = `
-          <div class="mt-2 shadow-2xl bg-zinc-100 rounded-lg overflow-hidden">
-            <div class="flex justify-between items-center py-3 px-4 bg-cyan-800 text-white">
-              <h3 class="text-lg font-semibold">${match.matchName}</h3>
-              <button class="delete hover:text-zinc-800" onclick="removeMatch(${value})">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-            <div class="flex items-center py-3 px-4">
-              <div class="flex-1">
-                <form class="incrementForm" onsubmit="event.preventDefault();
-                  incrementScore(${value}, Number(this.increment.value)); this.reset();">
-                  <div class="flex items-center">
-                    <h4 class="md:mr-2">Increment:</h4>
-                    <input type="number" name="increment" class="w-16 md:w-32 border rounded-lg px-2 py-1 bg-white" />
-                  </div>
-                </form>
+      <div class="mt-2 shadow-2xl bg-zinc-100 rounded-lg overflow-hidden">
+        <div class="flex justify-between items-center py-3 px-4 bg-cyan-800 text-white">
+          <h3 class="text-lg font-semibold">${match.matchName}</h3>
+          <button class="delete hover:text-zinc-800" onclick="removeMatch(${value})">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+        <div class="flex items-center py-3 px-4">
+          <div class="flex-1">
+            <form class="incrementForm" onsubmit="event.preventDefault();
+              incrementScore(${value}, Number(this.increment.value)); this.reset();">
+              <div class="flex items-center">
+                <h4 class="md:mr-2">Increment:</h4>
+                <input type="number" name="increment" class="w-16 md:w-32 border rounded-lg px-2 py-1 bg-white" />
               </div>
-              <div class="flex-1">
-                <form class="decrementForm" onsubmit="event.preventDefault();
-                  decrementScore(${value}, Number(this.decrement.value)); this.reset();">
-                  <div class="flex items-center">
-                    <h4 class="md:mr-2">Decrement:</h4>
-                    <input type="number" name="decrement" class="w-16 md:w-32 border rounded-lg px-2 py-1 bg-white" />
-                  </div>
-                </form>
-              </div>
-              <div class="flex-1 md:flex md:justify-end">
-                <h2 class="text-lg md:text-2xl font-bold text-center ml-2">${match.score}</h2>
-              </div>
-            </div>
+            </form>
           </div>
-        `;
+          <div class="flex-1">
+            <form class="decrementForm" onsubmit="event.preventDefault();
+              decrementScore(${value}, Number(this.decrement.value)); this.reset();">
+              <div class="flex items-center">
+                <h4 class="md:mr-2">Decrement:</h4>
+                <input type="number" name="decrement" class="w-16 md:w-32 border rounded-lg px-2 py-1 bg-white" />
+              </div>
+            </form>
+          </div>
+          <div class="flex-1 md:flex md:justify-end">
+            <h2 class="text-lg md:text-2xl font-bold text-center ml-2">${match.score}</h2>
+          </div>
+        </div>
+      </div>
+    `;
     allMatches.insertAdjacentHTML('beforeend', newMatch);
     //  allMatches.innerHTML += newMatch;
   });
